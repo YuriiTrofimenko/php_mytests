@@ -1,0 +1,13 @@
+http://testoteka.ukr.net/alltests/
+
+
+http://php.net/manual/ru/langref.php !!!!!!
+
+https://ru.wikipedia.org/wiki/Model-View-Controller
+https://habrahabr.ru/post/181772/
+
+https://nix-tips.ru/yii2-api-guides/ !!!!!!
+
+https://habrahabr.ru/post/11525/
+
+Перелопатить весь код приложения (все кроме папки vendor). Разобраться какой код за что отвечает. 
