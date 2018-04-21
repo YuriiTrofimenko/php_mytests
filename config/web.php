@@ -11,6 +11,7 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'verYs3crEk3YYyy_',
+            //'baseUrl'=> '',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -49,6 +50,11 @@ $config = [
         */
     ],
     'params' => $params,
+    'modules' => [
+        'tests' => [
+            'class' => 'app\modules\tests\TestsModule',
+        ],
+    ],
 ];
 
 if (YII_ENV_DEV) {
