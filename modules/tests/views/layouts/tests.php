@@ -4,10 +4,10 @@
 /* @var $content string */
 
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
-use app\assets\AppAsset;
+//use yii\bootstrap\Nav;
+//use yii\bootstrap\NavBar;
+//use yii\widgets\Breadcrumbs;
+use app\modules\tests\assets\AppAsset;
 
 AppAsset::register($this);
 ?>
@@ -25,40 +25,40 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-<div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => 'My tests - admin',
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav'],
-        'items' => [
-            ['label' => 'One', 'url' => ['/category/index']],
-            ['label' => 'Two', 'url' => ['/test/index']],
-        ],
-    ]);
-    NavBar::end();
-    ?>
+    <!--Main menu-->
+    <nav>
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="#" class="brand-logo">MyTests</a>
+            <a href="#" data-target="nav-mobile" class="sidenav-trigger button-collapse"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="#home" class="">Главная</a></li>
+                <li><a href="#about">О нас</a></li>
+            </ul>
+        </div>
+    </nav>
 
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= $content ?>
-    </div>
-</div>
+    <!--Main menu mobile-->
+    <ul id="nav-mobile" class="sidenav">
+        <li><a href="#home" class="">Главная</a></li>
+        <li><a href="#about">О нас</a></li>
+    </ul>
 
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; Тесты <?= date('Y') ?></p>
+    <!--Main content-->
+    <?= $content ?>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
+    <footer class="page-footer teal">
+        <div class="container">
+            <div class="row">
+                
+            </div>
+            <div class="footer-copyright">
+                <div class="container">
+                    <p class="pull-left">&copy; Тесты <?= date('Y') ?></p>
+                    <p class="pull-right"><?= Yii::powered() ?></p>
+                </div>
+            </div>            
+        </div>
+    </footer>
 
 <?php $this->endBody() ?>
 </body>

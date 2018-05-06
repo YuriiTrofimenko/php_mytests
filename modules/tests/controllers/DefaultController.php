@@ -17,4 +17,25 @@ class DefaultController extends Controller
     {
         return $this->render('index');
     }
+
+    public function actionHome()
+    {
+    	$this->layout = false;
+        return $this->render('home');
+    }
+
+    public function actionAbout()
+    {
+    	$this->layout = false;
+        return $this->render('about');
+    }
+
+    /*public function actions()
+    {
+        return [
+		   'pages' => [
+		   		'class' => 'yii\web\ViewAction',
+		   ],
+		 ];
+    }*/
 }

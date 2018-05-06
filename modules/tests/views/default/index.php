@@ -1,12 +1,8 @@
-<div class="tests-default-index">
-    <h1><?= $this->context->action->uniqueId ?></h1>
-    <p>
-        This is the view content for action "<?= $this->context->action->id ?>".
-        The action belongs to the controller "<?= get_class($this->context) ?>"
-        in the "<?= $this->context->module->id ?>" module.
-    </p>
-    <p>
-        You may customize this page by editing the following file:<br>
-        <code><?= __FILE__ ?></code>
-    </p>
-</div>
+<?php
+use yii\helpers\Url;
+?>
+<!--Sections for pages-->
+<!-- <section id="home" src="<?= Url::to(['/tests/default/pages&view=home']) ?>"></section>
+<section id="about" src="<?= Url::to(['/tests/default/pages&view=about']) ?>"></section> -->
+<section id="home" src="<?= Url::to(['/tests/default/home']) ?>"></section>
+<section id="about" src="<?= Url::to(['/tests/default/about']) ?>"></section>
