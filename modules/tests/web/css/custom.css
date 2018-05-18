@@ -18,3 +18,5 @@ nav .brand-logo {
 nav ul a {
 	color: #000000 !important;
 }
+
+.preloader-wrapper { display:none;position:absolute;left:50%;top:50%}

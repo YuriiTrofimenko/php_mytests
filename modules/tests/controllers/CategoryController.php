@@ -16,8 +16,8 @@ class CategoryController extends Controller
         return "hello";
     }
 
+    //http://localhost/web/?r=tests/category/get-categories
     public function actionGetCategories($parent = null)
- 
     {
      
         \Yii::$app->response->format = \yii\web\Response:: FORMAT_JSON;

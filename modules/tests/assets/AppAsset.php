@@ -16,6 +16,7 @@ class AppAsset extends AssetBundle
     public $js = [
         'js/materialize.min.js',
         'js/jquery-hashchange.js',
+        'js/hogan-3.0.2.min.js',
         'js/app.js',
     ];
     public $depends = [
