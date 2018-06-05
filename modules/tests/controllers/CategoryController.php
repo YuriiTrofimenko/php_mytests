@@ -2,11 +2,12 @@
 
 namespace app\modules\tests\controllers;
 
+//use Yii;
 use yii\web\Controller;
 use app\models\Category;
 
 /**
- * Default controller for the `tests` module
+ * Category controller for the `tests` module
  */
 class CategoryController extends Controller
 {
@@ -16,7 +17,14 @@ class CategoryController extends Controller
         return "hello";
     }
 
+    //Проверка наличия у сатегории дочерних категорий
+    public function getCategories($id = null)
+    {
+        return Category::find()->where(['parentId' => $id])->all();
+    }
+
     //http://localhost/web/?r=tests/category/get-categories
+    //index.php/?r=tests/category/get-categories
     public function actionGetCategories($parent = null)
     {
      
@@ -25,7 +33,7 @@ class CategoryController extends Controller
         //$student = Student::find()->all();
         //$categories = Category::find()->with('parent' => $parent)->all();
         //
-        $categories = Category::find()->where(['parentId' => $parent])->all();
+        $categories = $this->getCategories($parent);
          
         if(count($categories) > 0 )
          
@@ -38,9 +46,11 @@ class CategoryController extends Controller
         else
          
         {
-         
+            //Yii::$app->response->redirect(Url::to(['index.php/?r=tests/test/get-tests']), 301);
+            //Yii::$app->end();
             return array('status'=>false,'data'=> 'No Categories Found');
-         
+            //Yii::$app->controllerNamespace = 'tests\controllers';
+            //return Yii::$app->runAction('tests/test/get-tests', ['categoryId' => $parent]);
         }
      
     }

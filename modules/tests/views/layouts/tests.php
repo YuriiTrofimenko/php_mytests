@@ -45,7 +45,7 @@ AppAsset::register($this);
             <a href="#" data-target="nav-mobile" class="sidenav-trigger button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
                 <li><a href="#home" class="">Главная</a></li>
-                <li><a href="#about">О нас</a></li>
+                <li><a href="#tests">Тесты</a></li>
             </ul>
         </div>
     </nav>
@@ -53,7 +53,7 @@ AppAsset::register($this);
     <!--Main menu mobile-->
     <ul id="nav-mobile" class="sidenav">
         <li><a href="#home" class="">Главная</a></li>
-        <li><a href="#about">О нас</a></li>
+        <li><a href="#tests">Тесты</a></li>
     </ul>
 
     <!--Main content-->

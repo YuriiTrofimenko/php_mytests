@@ -24,10 +24,10 @@ class DefaultController extends Controller
         return $this->render('home');
     }
 
-    public function actionAbout()
+    public function actionTests()
     {
     	$this->layout = false;
-        return $this->render('about');
+        return $this->render('tests');
     }
 
     /*public function actions()
