@@ -23,28 +23,35 @@ class TestController extends Controller
     }
 
     //http://localhost/web/?r=tests/test/get-tests
-    public function actionGetTests($parent = null)
-    {
+    public function actionGetTests($parent = null) {
      
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
          
         $tests = $this->getTests($parent);
          
-        if(count($tests) > 0 )
-         
-        {
+        if(count($tests) > 0 ){
          
             return array('status' => true, 'data'=> $tests);
          
+        } else {
+         
+            return array('status'=>false,'data'=> 'No tests found');
         }
-         
-        else
-         
-        {
-         
-            return array('status'=>false,'data'=> 'No Tests Found');
-         
-        }
+    }
+
+    public function actionGetTest($testid = null) {
      
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+         
+        $test = Test::findOne($testid);
+         
+        if($test != null ){
+         
+            return array('status' => true, 'data'=> $test);
+         
+        } else {
+         
+            return array('status'=>false,'data'=> 'Test not found');
+        }
     }
 }

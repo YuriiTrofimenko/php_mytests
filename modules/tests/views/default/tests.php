@@ -13,13 +13,28 @@
 				$(".preloader-wrapper").css("display", "none");
 			}
 
-			//console.log(params);
-			var categoryid = (params != undefined) ? "&parent=" + params : "";
+			console.log(params);
 
+			params = (params != undefined) ? params : "";
+			
+			function urlParamsToObject(_params) {
+			  
+			  var result = {};
+			  _params.split("&").forEach(function(part) {
+			    var item = part.split("=");
+			    result[item[0]] = decodeURIComponent(item[1]);
+			  });
+			  return result;
+			}
+
+			var paramsObject = urlParamsToObject(params);
+			console.log(paramsObject);
+			
 			var getTests = function(_categoryid){
 
+				var param = (_categoryid != "") ? "&parent=" + _categoryid : "";
 				$.ajax({
-		            url: "index.php/?r=tests/test/get-tests" + _categoryid,
+		            url: "index.php/?r=tests/test/get-tests" + param,
 		            dataType: 'json',
 		            type: "POST",
 		            cache : false
@@ -32,9 +47,12 @@
 				  		'{{#data}}'
 				  		+'<div class="col s12 m3 l3 xl3">'
 							+'<div class="card">'
-								+'<span class="card-title">{{name}}</span>'
+								+'<div class="card-content">'
+									+'<span class="card-title">{{name}}</span>'
+          							+'<p>{{description}}</p>'
+        						+'</div>'
 								+'<div class="card-action">'
-					          		+'<a href="#tests:{{id}}">Тесты</a>'
+					          		+'<a href="#tests:testid={{id}}">Тесты</a>'
 								+'</div>'
 							+'</div>'
 						+'</div>'
@@ -60,25 +78,68 @@
 		        });
 			}
 
-			$.ajax({
-	            url: "index.php/?r=tests/category/get-categories" + categoryid,
-	            dataType: 'json',
-	            type: "POST",
-	            cache : false
-	        }).done(function(resp) {
-	            
-	            //В ответ получаем json-строку с данными о всех categories
-	            if(resp.status){
+			var getCategories = function(_categoryid){
 
-	            	var data = resp.data;
-		            //Готовим шаблон таблицы categories при помощи библиотеки Hogan
+				var param = (_categoryid != "") ? "&parent=" + _categoryid : "";
+				$.ajax({
+		            url: "index.php/?r=tests/category/get-categories" + param,
+		            dataType: 'json',
+		            type: "POST",
+		            cache : false
+		        }).done(function(resp) {
+		            
+		            //В ответ получаем json-строку с данными о всех categories
+		            if(resp.status){
+
+		            	var data = resp.data;
+			            //Готовим шаблон таблицы categories при помощи библиотеки Hogan
+					  	var template = Hogan.compile(
+					  		'{{#data}}'
+					  		+'<div class="col s12 m3 l3 xl3">'
+								+'<div class="card">'
+									+'<div class="card-content">'
+										+'<span class="card-title">{{name}}</span>'
+									+'</div>'
+									+'<div class="card-action">'
+						          		+'<a href="#tests:categoryid={{id}}">Разделы</a>'
+									+'</div>'
+								+'</div>'
+							+'</div>'
+							+'{{/data}}'
+				  		);
+				  		
+					  	//Заполняем шаблон данными и помещаем на веб-страницу
+				  		$('#categories-container').html(template.render(resp));
+				  		preloaderHide();
+		            } else {
+
+		            	getTests(_categoryid);
+		            }
+		        });
+	        };
+
+	        var getTest = function(_testid){
+
+				var param = (_testid != "") ? "&testid=" + _testid : "";
+				$.ajax({
+		            url: "index.php/?r=tests/test/get-test" + param,
+		            dataType: 'json',
+		            type: "POST",
+		            cache : false
+		        }).done(function(resp) {
+		            
+		            //В ответ получаем json-строку с данными о test
+		            var data = resp.data;
+		            //Готовим шаблон test при помощи библиотеки Hogan
 				  	var template = Hogan.compile(
 				  		'{{#data}}'
 				  		+'<div class="col s12 m3 l3 xl3">'
 							+'<div class="card">'
-								+'<span class="card-title">{{name}}</span>'
+								+'<div class="card-content">'
+									+'<span class="card-title">{{name}}</span>'
+								+'</div>'
 								+'<div class="card-action">'
-					          		+'<a href="#tests:{{id}}">Разделы</a>'
+					          		+'<a href="#tests:questionid={{id}}">Пройти</a>'
 								+'</div>'
 							+'</div>'
 						+'</div>'
@@ -101,11 +162,34 @@
 				  	//Заполняем шаблон данными и помещаем на веб-страницу
 			  		$('#categories-container').html(template.render(resp));
 			  		preloaderHide();
-	            } else {
+		        });
+			}
 
-	            	getTests(categoryid);
-	            }
-	        });
+	        if ('categoryid' in paramsObject) {
+
+	        	getCategories(paramsObject.categoryid);
+			} else if ('testid' in paramsObject) {
+
+				getTest(paramsObject.testid);
+			} else {
+
+				getCategories("");
+			}
+
+	        /*
+						var template = Hogan.compile(
+				  		'{{#data}}'
+				  		+'<div class="col s12 m3 l3 xl3">'
+							+'<div class="card">'
+								+'<span class="card-title">{{name}}</span>'
+								+'<div class="card-action">'
+					          		+'<a href="#tests:categoryid={{id}}">{{#parentId}}Разделы{{/parentId}}{{^parentId}}Тесты{{/parentId}}</a>'
+								+'</div>'
+							+'</div>'
+						+'</div>'
+						+'{{/data}}'
+			  			);
+			  		*/
 	    }
 	    
 		//setTimeout(preloaderHide, 500);
