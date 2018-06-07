@@ -7,8 +7,9 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
+use app\models\forms\LoginForm;
 use app\models\ContactForm;
+use app\models\User;
 
 class SiteController extends Controller
 {
@@ -76,10 +77,45 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        /*if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
-        }
+        }*/
         return $this->render('login', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Login action.
+     *
+     * @return Response|string
+     */
+    public function actionSignup()
+    {
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = new LoginForm();
+        /*if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->goBack();
+        }*/
+        if($model->load(\Yii::$app->request->post()) && $model->validate()){
+
+            $user = new User();
+            $user->username = $model->username;
+            $user->password = \Yii::$app->security->generatePasswordHash($model->password);
+
+            /*echo '<pre>';
+            var_dump($user);
+            echo '</pre>';
+            die;*/
+
+            if($user->save()){
+                return $this->goHome();
+            }
+         }
+        return $this->render('signup', [
             'model' => $model,
         ]);
     }
