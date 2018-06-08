@@ -22,7 +22,7 @@ class m180607_080702_create_user_table extends Migration
             'id' => $this->primaryKey(),
             'username' => $this->string()->notNull()->unique(),
             'password' => $this->string()->notNull(),
-            'role' => $this->string()->notNull()->defaultValue("user"),
+            //'role' => $this->string()->notNull()->defaultValue("user"),
             'status' => $this->smallInteger()->notNull()->defaultValue(10),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),

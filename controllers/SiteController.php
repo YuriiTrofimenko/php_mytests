@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\forms\LoginForm;
+use app\models\forms\SignupForm;
 use app\models\ContactForm;
 use app\models\User;
 
@@ -62,6 +63,10 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        /*echo "<pre>";
+        var_dump(Yii::$app->authManager->getRolesByUser(User::findByUsername(Yii::$app->user->identity->username)->getId()));
+        echo "</pre>";*/
+        //die();
         return $this->render('index');
     }
 
@@ -77,16 +82,18 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
-        /*if ($model->load(Yii::$app->request->post()) && $model->login()) {
+
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
-        }*/
+        }
+
         return $this->render('login', [
             'model' => $model,
         ]);
     }
 
     /**
-     * Login action.
+     * Signup action.
      *
      * @return Response|string
      */
@@ -96,25 +103,21 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
-        $model = new LoginForm();
-        /*if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }*/
+        $model = new SignupForm();
+
         if($model->load(\Yii::$app->request->post()) && $model->validate()){
 
             $user = new User();
             $user->username = $model->username;
             $user->password = \Yii::$app->security->generatePasswordHash($model->password);
 
-            /*echo '<pre>';
-            var_dump($user);
-            echo '</pre>';
-            die;*/
-
             if($user->save()){
+                $userRole = Yii::$app->authManager->getRole('user');
+                Yii::$app->authManager->assign($userRole, $user->getId());
                 return $this->goHome();
             }
          }
+
         return $this->render('signup', [
             'model' => $model,
         ]);
