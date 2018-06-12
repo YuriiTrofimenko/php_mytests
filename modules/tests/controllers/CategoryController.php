@@ -3,6 +3,7 @@
 namespace app\modules\tests\controllers;
 
 //use Yii;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use app\models\Category;
 
@@ -11,6 +12,21 @@ use app\models\Category;
  */
 class CategoryController extends Controller
 {
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
 
     public function actionIndex() {
 

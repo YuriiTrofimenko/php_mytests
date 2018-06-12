@@ -16,6 +16,22 @@ class QuestionController extends Controller
         return "hello";
     }
 
+    public function actionGetQuestion($testid = null) {
+     
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+         
+        $test = Test::findOne($testid);
+         
+        if($test != null ){
+         
+            return array('status' => true, 'data'=> $test);
+         
+        } else {
+         
+            return array('status'=>false,'data'=> 'Test not found');
+        }
+    }
+
     /*//Проверка наличия у сатегории дочерних категорий
     public function getCategories($id = null)
     {

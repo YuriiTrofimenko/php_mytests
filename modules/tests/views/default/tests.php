@@ -52,7 +52,7 @@
           							+'<p>{{description}}</p>'
         						+'</div>'
 								+'<div class="card-action">'
-					          		+'<a href="#tests:testid={{id}}">Тесты</a>'
+					          		+'<a href="#tests:testid={{id}}">Пройти</a>'
 								+'</div>'
 							+'</div>'
 						+'</div>'
@@ -87,6 +87,13 @@
 		            type: "POST",
 		            cache : false
 		        }).done(function(resp) {
+
+		        	console.log('test '+resp.status);
+		        	if(resp == 'Forbidden (#403): Login Required'){
+
+		        		alert('Auth error');
+		        		return;
+		        	}
 		            
 		            //В ответ получаем json-строку с данными о всех categories
 		            if(resp.status){
@@ -101,7 +108,7 @@
 										+'<span class="card-title">{{name}}</span>'
 									+'</div>'
 									+'<div class="card-action">'
-						          		+'<a href="#tests:categoryid={{id}}">Разделы</a>'
+						          		+'<a href="#tests:categoryid={{id}}">Просмотр</a>'
 									+'</div>'
 								+'</div>'
 							+'</div>'
@@ -115,7 +122,18 @@
 
 		            	getTests(_categoryid);
 		            }
-		        });
+		        }).fail(function(jqXHR, textStatus) {
+				    //alert( "error" );
+				    $('#categories-container').html(
+				    	"<div>"
+				    		+"<h6>Ошибка:</h6>"
+				    		+"<span>"
+				    			+ jqXHR.responseText
+				    		+"</span>"
+				    	+"</div>"
+				    	);
+				    preloaderHide();
+				});
 	        };
 
 	        var getTest = function(_testid){
