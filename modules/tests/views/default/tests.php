@@ -13,6 +13,8 @@
 				$(".preloader-wrapper").css("display", "none");
 			}
 
+			var isGoingToQuestion = false;
+
 			console.log(params);
 
 			params = (params != undefined) ? params : "";
@@ -138,8 +140,10 @@
 
 	        var getTest = function(_testid){
 
-				var param = (_testid != "") ? "&testid=" + _testid : "";
-				$.ajax({
+				var param = (_testid != "") ? ":testid=" + _testid : "";
+				isGoingToQuestion = true;
+				window.location.href = "#question" + param;
+				/*$.ajax({
 		            url: "index.php/?r=tests/test/get-test" + param,
 		            dataType: 'json',
 		            type: "POST",
@@ -163,24 +167,10 @@
 						+'</div>'
 						+'{{/data}}'
 			  		);
-			  		/*
-						var template = Hogan.compile(
-				  		'{{#data}}'
-				  		+'<div class="col s12 m3 l3 xl3">'
-							+'<div class="card">'
-								+'<span class="card-title">{{name}}</span>'
-								+'<div class="card-action">'
-					          		+'<a href="#tests:categoryid={{id}}">{{#parentId}}Разделы{{/parentId}}{{^parentId}}Тесты{{/parentId}}</a>'
-								+'</div>'
-							+'</div>'
-						+'</div>'
-						+'{{/data}}'
-			  			);
-			  		*/
 				  	//Заполняем шаблон данными и помещаем на веб-страницу
 			  		$('#categories-container').html(template.render(resp));
 			  		preloaderHide();
-		        });
+		        });*/
 			}
 
 	        if ('categoryid' in paramsObject) {
@@ -188,7 +178,13 @@
 	        	getCategories(paramsObject.categoryid);
 			} else if ('testid' in paramsObject) {
 
-				getTest(paramsObject.testid);
+				if(isGoingToQuestion){
+
+					isGoingToQuestion = false;
+				} else {
+
+					getTest(paramsObject.testid);
+				}
 			} else {
 
 				getCategories("");

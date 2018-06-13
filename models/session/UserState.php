@@ -1,7 +1,7 @@
 <?php
 namespace app\models\session;
 //
-class Hour {
+class UserState {
     //
     public $userName;
     //

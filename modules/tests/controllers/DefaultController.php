@@ -67,6 +67,12 @@ class DefaultController extends Controller
         return $this->render('tests');
     }
 
+    public function actionQuestion()
+    {
+        $this->layout = false;
+        return $this->render('question');
+    }
+
     /**
      * Login action.
      *
