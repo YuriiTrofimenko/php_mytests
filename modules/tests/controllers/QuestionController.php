@@ -5,6 +5,7 @@ namespace app\modules\tests\controllers;
 use Yii;
 use yii\web\Controller;
 use app\models\Question;
+use app\models\Answer;
 use app\models\session\UserState;
 
 /**
@@ -16,6 +17,11 @@ class QuestionController extends Controller
     public function actionIndex() {
 
         return "hello";
+    }
+
+    public function getAnswerMap($answer) {
+
+        return ['id'=>$answer['id'], 'text'=>$answer['text_']];
     }
 
     public function actionGetQuestion($testid = null) {
@@ -48,17 +54,32 @@ class QuestionController extends Controller
         if ($userState->currentQuestionIndex <= $userState->currentTestQCount) {
              
             $currentQuestionIndex = $userState->currentQuestionIndex;
-            $test =
+            $question =
                 Question::find()
                     ->where(['testid' => $testid])
                     ->offset($currentQuestionIndex - 1)
                     ->limit(1)
                     ->one();
          
-            if($test != null ){
+            if($question != null ){
              
+                $answers =
+                    Answer::find()
+                    ->where(['questionId' => $question->id])
+                    ->all();
+
+                $answersMap = array_map([$this, 'getAnswerMap'], $answers);
+
                 $userState->currentQuestionIndex += 1;
-                return array('status' => true, 'data'=> $test);
+                return [
+                    'status' => true
+                    , 'data'=> [
+                        'question'=>$question->text_
+                        , 'total_count'=>$userState->currentTestQCount
+                        , 'current_question_index'=>$currentQuestionIndex
+                        , 'answers'=>$answersMap
+                    ]
+                ];
                 //return array('status' => true, 'data'=> $userState);
              
             } else {

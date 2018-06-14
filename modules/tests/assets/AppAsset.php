@@ -18,6 +18,7 @@ class AppAsset extends AssetBundle
         'js/jquery-hashchange.js',
         'js/hogan-3.0.2.min.js',
         'js/app.js',
+        'js/init.js',
     ];
     public $depends = [
     	'yii\web\YiiAsset',

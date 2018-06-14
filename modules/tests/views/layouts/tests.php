@@ -63,6 +63,14 @@ AppAsset::register($this);
     <ul id="nav-mobile" class="sidenav">
         <li><a href="#home" class="">Главная</a></li>
         <li><a href="#tests">Тесты</a></li>
+        <?php
+            if (Yii::$app->user->isGuest) {
+                echo "<li><a href='".Url::toRoute(['default/signup'])."'>Signup</a></li>";
+                echo "<li><a href='".Url::toRoute(['default/login'])."'>Login</a></li>";
+            } else {
+                echo "<li><a href='".Url::toRoute(['default/logout'])."' data-method='post'>Logout (". Yii::$app->user->identity->username .")</a></li>";
+            }
+        ?>
     </ul>
 
     <!--Main content-->
