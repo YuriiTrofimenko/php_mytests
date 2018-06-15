@@ -50,6 +50,29 @@ class QuestionController extends Controller
                 );
             $session->set('user_state', $userState);
         }
+
+        $selection = Yii:: $app->request->post()['selection'];
+        if ($selection) {
+
+            $prevQuestionIndex = $userState->currentQuestionIndex;
+            $prevQuestionIndex--;
+            $question =
+                Question::find()
+                    ->where(['testid' => $testid])
+                    ->offset($prevQuestionIndex - 1)
+                    ->limit(1)
+                    ->one();
+            
+            if($question != null ){
+
+                $rightAnswersCount =
+                    Answer::find()
+                    ->where(['questionId' => $question->id, 'isTrue' => 1, 'id' => $selection])
+                    ->count();
+                
+                $userState->score += $rightAnswersCount;
+            }
+        }
         
         if ($userState->currentQuestionIndex <= $userState->currentTestQCount) {
              
@@ -70,6 +93,7 @@ class QuestionController extends Controller
 
                 $answersMap = array_map([$this, 'getAnswerMap'], $answers);
 
+
                 $userState->currentQuestionIndex += 1;
                 return [
                     'status' => true
@@ -87,8 +111,9 @@ class QuestionController extends Controller
                 return array('status'=>false,'data'=> 'Questions not found');
             }
         }
+        $totalScore = $userState->score;
         $session->remove('user_state');
-        return array('status'=>false,'data'=> 'Test is completed');
+        return array('status'=>false,'data'=> ['totalScore'=>$totalScore]);
         //return array('status'=>false,'data'=> $userState);
     }
 

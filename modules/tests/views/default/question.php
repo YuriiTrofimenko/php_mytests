@@ -14,7 +14,7 @@
 				$(".preloader-wrapper").css("display", "none");
 			}
 
-			console.log(params);
+			//console.log(params);
 
 			params = (params != undefined) ? params : "";
 			
@@ -29,84 +29,88 @@
 			}
 
 			var paramsObject = urlParamsToObject(params);
-			console.log(paramsObject);
+			//console.log(paramsObject);
 			var param = (paramsObject.testid != "") ? "&testid=" + paramsObject.testid : "";
 
 			//Готовим функцию
 			function nextQuestion() {
 
+				var checkedRadioButton = $('input[name=answer-group]:checked', 'form#send-answer');
+				console.log(checkedRadioButton);
+				var checkedRadioButtonValue = ($(checkedRadioButton).length == 1) ? $(checkedRadioButton).val() : null;
+				console.log(checkedRadioButtonValue);
 				$.ajax({
 		            url: "index.php/?r=tests/question/get-question" + param,
 		            dataType: 'json',
 		            type: "POST",
+		            data: {selection : checkedRadioButtonValue},
 		            cache : false
 		        }).done(function(resp) {
 		            
-		            console.log(resp);
+		            //console.log(resp);
 		            //В ответ получаем json-строку с данными о test
 		            var data = resp.data;
+		            var template = "";
 		            //Готовим шаблон test при помощи библиотеки Hogan
-				  	var template = Hogan.compile(
-				  		'<div class="col s12 m12 l12 xl12">'
-				  			+'<h6>Вопрос {{current_question_index}} из {{total_count}}:</h6>'
-				  			+'<div>{{question}}</div>'
-							+'<form id="send-answer" action="#">'
-								+'{{#answers}}'
-									+'<p>'
-										+'<label>'
-											+'<input name="sort-group" type="radio" value="{{id}}" />'
-											+'<span>{{text}}</span>'
-										+'</label>'
-									+'</p>'
-								+'{{/answers}}'
-								+'<button class="btn waves-effect waves-light" type="submit" name="action">'
-									+'Далее'
-		                        	+'<i class="material-icons right">send</i>'
-								+'</button>'
-							+'</form>'
-						+'</div>'
-						
-			  		);
-				  	//Заполняем шаблон данными и помещаем на веб-страницу
-			  		$('#question-container').html(template.render(data));
+		            if(data.hasOwnProperty('question')){
 
-			  		$('form#send-answer button').unbind('click');
-			  		//Обработчик 
-				    $('form#send-answer button').click(function(ev){
+		            	template = Hogan.compile(
+					  		'<div class="col s12 m12 l12 xl12">'
+					  			+'<h6>Вопрос {{current_question_index}} из {{total_count}}:</h6>'
+					  			+'<div>{{question}}</div>'
+								+'<form id="send-answer" action="#">'
+									+'{{#answers}}'
+										+'<p>'
+											+'<label>'
+												+'<input name="answer-group" type="radio" value="{{id}}" />'
+												+'<span>{{text}}</span>'
+											+'</label>'
+										+'</p>'
+									+'{{/answers}}'
+									+'<button class="btn waves-effect waves-light" type="submit" name="action">'
+										+'Далее'
+			                        	+'<i class="material-icons right">send</i>'
+									+'</button>'
+								+'</form>'
+							+'</div>'
+				  		);
 
-				        ev.preventDefault();
+				  		//Заполняем шаблон данными и помещаем на веб-страницу
+				  		$('#question-container').html(template.render(data));
 
-				        //location.reload();
+				  		$('form#send-answer button').unbind('click');
+				  		//Обработчик 
+					    $('form#send-answer button').click(function(ev){
 
-				        nextQuestion();
+					        ev.preventDefault();
+					        nextQuestion();
+						});
+		            } if (data.hasOwnProperty('totalScore')){
 
-				        /*$.ajax({
-				            url: "../api/orders.php",
-				            //method : "POST",
-				            dataType: 'json',
-				            type: "POST",
-				            data: { 
-				                'action': 'create-order'
-				                , 'date': $('#calendar').val()
-				                , 'hours-id': $('#time-select select option:selected').val()
-				                , 'manicurist-id': $('#manicurists-select select option:selected').val()
-				            },
-				            cache : false
-				        }).done(function(data) {
+		            	template = Hogan.compile(
+					  		'<div class="col s12 m12 l12 xl12">'
+					  			+'<h6>Вы набрали {{totalScore}} баллов из :</h6>'
+					  			+'<div>Результат отправлен администратору на электронную почту</div>'
+								+'<form id="send-answer" action="#">'
+									+'<button class="btn waves-effect waves-light" type="submit" name="action">'
+										+'Ok'
+			                        	+'<i class="material-icons right">send</i>'
+									+'</button>'
+								+'</form>'
+							+'</div>'
+				  		);
 
-				            //console.log(data);
-				            //Проверяем, успешно ли выполнено создание записи о заказе
-				            if (data.result == 'created') {
-				                //Сообщаем пользователю об успешной отправке (далее можно заменить на отображение сообщения в форме)
-				                //alert('Заказ успешно добавлен');
-				                populateTable();
-				            } //Иначе сообщаем об ошибке (далее можно заменить на отображение сообщения в форме)
-				            else {
-				                alert('Ошибка добавления заказа');
-				            }
-						});*/
-					});
+				  		//Заполняем шаблон данными и помещаем на веб-страницу
+				  		$('#question-container').html(template.render(data));
 
+				  		$('form#send-answer button').unbind('click');
+				  		//Обработчик 
+					    $('form#send-answer button').click(function(ev){
+
+					        ev.preventDefault();
+					        window.location.href = "#tests";
+						});
+		            }
 			  		preloaderHide();
 		        });
 	        }
