@@ -80,6 +80,18 @@ class DefaultController extends Controller
      */
     public function actionLogin()
     {
+        $session = Yii::$app->session;
+
+        if ($session->has('failure_time') && (time() - $session->get('failure_time') < 60)) {
+            
+            
+            $session->remove('attempts_count');
+            return "Вы указали неверные данные для входа на сайт более 3 раз. 1 минута, после которой можно будет сделать следующую попытку, еще не истекла";
+        } else {
+            
+            $session->remove('failure_time');
+        }
+
         if (!Yii::$app->user->isGuest) {
             //return $this->goHome();
             return Yii::$app->getResponse()->redirect($this->defaultUrl);
@@ -89,7 +101,27 @@ class DefaultController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             //return $this->goBack();
+            if ($session->has('attempts_count')) {
+                
+                $session->remove('attempts_count');
+            }
             return Yii::$app->getResponse()->redirect($this->defaultUrl);
+        } else {
+
+            $attemptsCount = $session->get('attempts_count');
+            if (!$attemptsCount) {
+                
+                $session->set('attempts_count', 1);
+            } else {
+
+                $attemptsCount++;
+                $session->set('attempts_count', $attemptsCount);
+            }
+            if ($attemptsCount > 3) {
+                
+                $session->set('failure_time', time());
+                return "Вы указали неверные данные для входа на сайт более 3 раз. Следующую попытку можно будет сделать через 1 минуту";
+            }
         }
 
         return $this->render('login', [
