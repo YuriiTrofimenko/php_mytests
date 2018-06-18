@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use yii\filters\AccessControl;
 use app\models\Answer;
 use app\models\Question;
 use app\models\Test;
@@ -10,6 +11,24 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 
 Class TestController extends \yii\web\Controller {
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
+                ],
+            ],
+        ];
+    }
 
     public function actionIndex() {
         $provider = new \yii\data\ActiveDataProvider([

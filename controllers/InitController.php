@@ -17,44 +17,20 @@ class InitController extends Controller
     /**
      * @inheritdoc
      */
-    /*public function behaviors()
+    public function behaviors()
     {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['admin'],
                     ],
                 ],
             ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
         ];
-    }*/
-
-    /**
-     * @inheritdoc
-     */
-    /*public function actions()
-    {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
-        ];
-    }*/
+    }
 
     /**
      * Init works.
@@ -65,13 +41,13 @@ class InitController extends Controller
     {
         //http://developer.uz/blog/rbac-%D1%80%D0%BE%D0%BB%D0%B8-%D0%B8-%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D0%B8-%D0%B2-yii2/
 
-        $role = Yii::$app->authManager->createRole('admin');
+        /*$role = Yii::$app->authManager->createRole('admin');
         $role->description = 'Администратор';
         Yii::$app->authManager->add($role);
          
         $role = Yii::$app->authManager->createRole('user');
         $role->description = 'Пользователь';
         Yii::$app->authManager->add($role);
-        return "ok";
+        return "ok";*/
     }
 }

@@ -4,6 +4,7 @@ namespace app\modules\tests\controllers;
 
 use Yii;
 use yii\web\Controller;
+use app\models\Test;
 use app\models\Question;
 use app\models\Answer;
 use app\models\session\UserState;
@@ -112,43 +113,35 @@ class QuestionController extends Controller
             }
         }
         $totalScore = $userState->score;
+        //Sending a message
+        /*Yii::$app->mailer->compose(
+            'resultmessage', [
+                    'testname' => Test::findOne($userState->currentTestId)->name,
+                    'username' => $userState->userName,
+                    'score' => $totalScore,
+                    'total' => $userState->currentTestQCount,
+                ])
+            ->setFrom('yurii@localhost')
+            ->setTo('yurii@localhost')
+            ->setSubject('Test result')
+            ->send();*/
+        $testname = Test::findOne($userState->currentTestId)->name;
+        $username = $userState->userName;
+        $total = $userState->currentTestQCount;
+
+        $to      = 'yurii@localhost';
+        $subject = 'Test result';
+        $message = "Тест {$testname}. Результаты пользователя {$username}: {$totalScore} баллов из {$total}.";
+        //$message = '=?UTF-8?B?'.base64_encode($message).'?=';
+        $headers = 'From: yurii@localhost' . "\r\n" .
+            'Reply-To: yurii@localhost' . "\r\n" .
+            //'MIME-Version: 1.0' . "\r\n" .
+            'Content-type: text/plain; charset=UTF-8' . "\r\n" .
+            //'Content-Transfer-Encoding: base64' . "\r\n" .
+            'X-Mailer: PHP/' . phpversion();
+
+        mail($to, $subject, $message, $headers);
         $session->remove('user_state');
-        return array('status'=>false,'data'=> ['totalScore'=>$totalScore]);
-        //return array('status'=>false,'data'=> $userState);
+        return array('status'=>false,'data'=> ['totalScore'=>$totalScore, 'total'=>$userState->currentTestQCount]);
     }
-
-    /*//Проверка наличия у сатегории дочерних категорий
-    public function getCategories($id = null)
-    {
-        return Question::find()->where(['parentId' => $id])->all();
-    }
-
-    //http://localhost/web/?r=tests/category/get-categories
-    public function actionGetCategories($parent = null)
-    {
-     
-        \Yii::$app->response->format = \yii\web\Response:: FORMAT_JSON;
-         
-        //$student = Student::find()->all();
-        //$categories = Category::find()->with('parent' => $parent)->all();
-        //
-        $categories = $this->getCategories($parent);
-         
-        if(count($categories) > 0 )
-         
-        {
-         
-            return array('status' => true, 'data'=> $categories);
-         
-        }
-         
-        else
-         
-        {
-         
-            return array('status'=>false,'data'=> 'No Categories Found');
-         
-        }
-     
-    }*/
 }

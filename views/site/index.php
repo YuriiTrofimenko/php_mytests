@@ -7,45 +7,36 @@ $this->title = 'My Yii Application';
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Congratulations!</h1>
+        <h1>My tests</h1>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
+        <p class="lead">Панель администрирования</p>
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Посмотреть сайт</a></p>
     </div>
 
     <div class="body-content">
 
         <div class="row">
             <div class="col-lg-4">
-                <h2>Heading</h2>
+                <h2>Шаг 1</h2>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+                <p>Войдите в учетную запись администратора. Если сейчас Вы находитесь в учетной записи обычного пользователя, из нее нужно предварительно выйти. На панели навигации кликните по пункту "Sign out". Затем кликните по пункту "Login". Введите имя и пароль администратора и кликните по кнопке "Login" под формой входа.</p>
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+                <!-- <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p> -->
             </div>
             <div class="col-lg-4">
-                <h2>Heading</h2>
+                <h2>Шаг 2</h2>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+                <p>Начните с создания категорий тестов. На панели навигации кликните по пункту "Категории". На открывшейся странице кликните по кнопке "Добавить Категорию". Введите название категории и сохраните результат, кликнув по кнопке "Сохранить". Подкатегории создаются точно так же, только кроме названия выбирается родительская категория из выпадающего списка.</p>
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
+                <!-- <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p> -->
             </div>
             <div class="col-lg-4">
-                <h2>Heading</h2>
+                <h2>Шаг 3</h2>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+                <p>Зайдите в раздел "Тесты". По аналогии с категориями, создайте тест, выбрав для него категорию из выпадающего списка. В таблице тестов в последней колонке кликните по пиктограме "View". Добавляйте вопросы, а затем по аналогии в каждый вопрос добавьте варианты ответов, пометив для каждого вопроса один из ответов как правильный.</p>
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+                <!-- <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p> -->
             </div>
         </div>
 
