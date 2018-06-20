@@ -11,7 +11,7 @@ $this->title = 'My Yii Application';
 
         <p class="lead">Панель администрирования</p>
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Посмотреть сайт</a></p>
+        <p><a class="btn btn-lg btn-success" href="index.php/?r=tests/default">Посмотреть сайт</a></p>
     </div>
 
     <div class="body-content">

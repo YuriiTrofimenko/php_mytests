@@ -78,6 +78,12 @@
 				  		//Заполняем шаблон данными и помещаем на веб-страницу
 				  		$('#question-container').html(template.render(data));
 
+				  		$('#question-container').append(
+				  			'<div class="col s12 m12 l12 xl12">'
+				  				+ '<img class="responsive-img" src="../../web/images/test-automation.png" alt="">'
+			  				+'</div>'
+			  			);
+
 				  		$('form#send-answer button').unbind('click');
 				  		//Обработчик 
 					    $('form#send-answer button').click(function(ev){
@@ -85,11 +91,23 @@
 					        ev.preventDefault();
 					        nextQuestion();
 						});
+
+						//Блокируем кнопк
+						$('form#send-answer button').attr('disabled', '');
+
+						//$('form input[type=radio]').unbind('click');
+				  		//Обработчик 
+					    $('form input[type=radio]').click(function(ev){
+
+					        $('form input[type=radio]').unbind('click');
+					        $('form#send-answer button').removeAttr('disabled');
+
+						});
 		            } if (data.hasOwnProperty('totalScore')){
 
 		            	template = Hogan.compile(
 					  		'<div class="col s12 m12 l12 xl12">'
-					  			+'<h6>Вы набрали {{totalScore}} баллов из :</h6>'
+					  			+'<h6>Вы набрали {{totalScore}} баллов из {{total}}</h6>'
 					  			+'<div>Результат отправлен администратору на электронную почту</div>'
 								+'<form id="send-answer" action="#">'
 									+'<button class="btn waves-effect waves-light" type="submit" name="action">'
@@ -102,6 +120,11 @@
 
 				  		//Заполняем шаблон данными и помещаем на веб-страницу
 				  		$('#question-container').html(template.render(data));
+				  		$('#question-container').append(
+				  			'<div class="col s12 m12 l12 xl12">'
+				  				+ '<img class="responsive-img" src="../../web/images/test-automation.png" alt="">'
+			  				+'</div>'
+			  			);
 
 				  		$('form#send-answer button').unbind('click');
 				  		//Обработчик 

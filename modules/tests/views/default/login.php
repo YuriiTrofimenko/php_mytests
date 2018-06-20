@@ -10,36 +10,36 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
+
+<div class="row site-login">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to login:</p>
+    <p>Пожалуйста, заполните следующие поля, чтобы зарегистрироваться:</p>
 
     <?php $form = ActiveForm::begin([
         'id' => 'login-form',
         'layout' => 'horizontal',
+        'options' => ['class' => 'col s12 m6'],
         'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            'labelOptions' => ['class' => 'col-lg-1 control-label'],
+            'template' => "<div class=\"input-field col s12\">\n{input}\n{label}\n<div class=\"col s12\">{error}</div></div>",
+            'labelOptions' => ['class' => ''],
+            'options' => [
+                'tag' => false,
+            ],
         ],
     ]); ?>
 
-        <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-
-        <?= $form->field($model, 'password')->passwordInput() ?>
-
-        
-
-        <div class="form-group">
-            <div class="col-lg-offset-1 col-lg-11">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-            </div>
+        <div class="row">
+            <?= $form->field($model, 'username')->textInput(['autofocus' => true, 'class' => 'validate', ['placeholder' => "Placeholder"]]) ?>
+            <?= $form->field($model, 'password')->passwordInput() ?>
         </div>
+        <?= Html::submitButton('Login<i class="material-icons right">send</i>', ['class' => 'btn waves-effect waves-light', 'name' => 'login-button']) ?>
 
     <?php ActiveForm::end(); ?>
-
-    <div class="col-lg-offset-1" style="color:#999;">
-        You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>
-        To modify the username/password, please check out the code <code>app\models\User::$users</code>.
-    </div>
 </div>
+<script type="text/javascript">
+    /*var preloader = document.getElementsByClassName('preloader-wrapper')[0];
+    preloader.style.display = "none";
+    console.log(document.getElementsByClassName('preloader-wrapper')[0]);
+    console.log(preloader);*/
+</script>

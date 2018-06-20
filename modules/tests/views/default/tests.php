@@ -47,7 +47,7 @@
 		            //Готовим шаблон таблицы tests при помощи библиотеки Hogan
 				  	var template = Hogan.compile(
 				  		'{{#data}}'
-				  		+'<div class="col s12 m3 l3 xl3">'
+				  		+'<div class="col s12 m4 l4 xl4">'
 							+'<div class="card">'
 								+'<div class="card-content">'
 									+'<span class="card-title">{{name}}</span>'
@@ -76,6 +76,11 @@
 			  		*/
 				  	//Заполняем шаблон данными и помещаем на веб-страницу
 			  		$('#categories-container').html(template.render(resp));
+			  		$('#categories-container').append(
+			  			'<div class="col s12 m12 l12 xl12">'
+			  				+ '<img class="responsive-img" src="../../web/images/test-automation.png" alt="">'
+		  				+'</div>'
+		  			);
 			  		preloaderHide();
 		        });
 			}
@@ -104,7 +109,7 @@
 			            //Готовим шаблон таблицы categories при помощи библиотеки Hogan
 					  	var template = Hogan.compile(
 					  		'{{#data}}'
-					  		+'<div class="col s12 m3 l3 xl3">'
+					  		+'<div class="col s12 m4 l4 xl4">'
 								+'<div class="card">'
 									+'<div class="card-content">'
 										+'<span class="card-title">{{name}}</span>'
@@ -119,6 +124,11 @@
 				  		
 					  	//Заполняем шаблон данными и помещаем на веб-страницу
 				  		$('#categories-container').html(template.render(resp));
+				  		$('#categories-container').append(
+				  			'<div class="col s12 m12 l12 xl12">'
+				  				+ '<img class="responsive-img" src="../../web/images/test-automation.png" alt="">'
+			  				+'</div>'
+			  			);
 				  		preloaderHide();
 		            } else {
 

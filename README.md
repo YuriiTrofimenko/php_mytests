@@ -185,3 +185,36 @@ vendor/bin/codecept run functional,unit -- --coverage-html --coverage-xml
 ```
 
 You can see code coverage output under the `tests/_output` directory.
+
+### Creditencials
+
+http://mytests-mariupol.zzz.com.ua/web
+
+Hosting
+
+http://www.zzz.com.ua/panel/ru/summary/service/FREE
+login: tyaa
+password: Password1
+
+
+DB
+
+http://www.zzz.com.ua/mysql
+host: mysql.zzz.com.ua
+port: 3306
+login: tyaa
+password: Password2
+
+
+FTP
+
+https://www.zzz.com.ua/ftp/index.php
+login: tyaa
+password: Password3
+
+
+E-mail
+
+https://www.zzz.com.ua/mail
+login: tyaa
+password: Password4

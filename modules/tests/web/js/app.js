@@ -7,10 +7,16 @@
   // show the "page" with optional parameter
   function show(pageName,param) {
 
-    $(".preloader-wrapper").css("display", "block");
-    //console.log($(".loader"));
+    
+    if (pageName !== "void") {
+
+        $(".preloader-wrapper").css("display", "block");
+    }
+
     // invoke page handler
-    var ph = pageHandlers[pageName]; 
+    var ph = pageHandlers[pageName];
+    //console.log(pageName);
+    //console.log("hi");
     
     // activate the page  
     $("nav a.active").removeClass("active");
@@ -30,15 +36,20 @@
 
   function app(pageName,param) {
   
-    var $page = $(document.body).find("section#" + pageName);  
+    //if (pageName != "void") {
+
+      var $page = $(document.body).find("section#" + pageName);  
     
-    var src = $page.attr("src");
-    if( src && $page.find(">:first-child").length == 0) { 
-      $.get(src, "html") // it has src and is empty - load it
-          .done(function(html){ currentPage = pageName; $page.html(html); show(pageName,param); })
-          .fail(function(){ $page.html("failed to get:" + src); });
-    } else
-      show(pageName,param);
+      var src = $page.attr("src");
+      if( src && $page.find(">:first-child").length == 0) { 
+        $.get(src, "html") // it has src and is empty - load it
+            .done(function(html){ currentPage = pageName; $page.html(html); show(pageName,param); })
+            .fail(function(){ $page.html("failed to get:" + src); });
+      } else {
+        show(pageName,param);
+      }
+    //}
+    
   }
 
   // register page handler  

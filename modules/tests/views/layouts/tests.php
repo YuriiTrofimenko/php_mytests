@@ -49,8 +49,8 @@ AppAsset::register($this);
                 <li><a href="#tests">Тесты</a></li>
                 <?php
                     if (Yii::$app->user->isGuest) {
-                        echo "<li><a href='".Url::toRoute(['default/signup'])."'>Signup</a></li>";
-                        echo "<li><a href='".Url::toRoute(['default/login'])."'>Login</a></li>";
+                        echo "<li><a href='".Url::toRoute(['default/signup'])."#void'>Signup</a></li>";
+                        echo "<li><a href='".Url::toRoute(['default/login'])."#void'>Login</a></li>";
                     } else {
                         echo "<li><a href='".Url::toRoute(['default/logout'])."' data-method='post'>Logout (". Yii::$app->user->identity->username .")</a></li>";
                     }
@@ -74,7 +74,9 @@ AppAsset::register($this);
     </ul>
 
     <!--Main content-->
-    <?= $content ?>
+    <div class="container">
+        <?= $content ?>
+    </div>
 
     <footer class="page-footer teal">
         <div class="container">
